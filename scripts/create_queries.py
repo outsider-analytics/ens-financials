@@ -21,13 +21,13 @@ queries_yml_path = os.path.join(os.path.dirname(__file__), "..", "queries.yml")
 
 
 def find_parameters_in_sql(sql_text: str):
-    # Regex to find {{variable}} patterns
-    pattern = re.compile(r"\{\{([\w\s]+)\}\}")
-    matches = pattern.findall(sql_text)
-    parameters = []
-    for match in matches:
-        # For simplicity, assuming all parameters are of type 'text' with no default value
-        parameters.append(match)
+    # Regex to find {{variable}} patterns, now including broader character set
+    pattern = re.compile(r"\{\{([^\{\}]+)\}\}")
+    matches = set(pattern.findall(sql_text))  # Use a set to ensure uniqueness
+    # Assuming Dune's API expects parameters to be dictionaries with specific keys
+    parameters = [
+        {"name": match.strip(), "type": "text", "value": ""} for match in matches
+    ]
     return parameters
 
 

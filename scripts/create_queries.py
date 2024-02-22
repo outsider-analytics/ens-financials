@@ -4,6 +4,29 @@ from dune_client.client import DuneClient
 from dotenv import load_dotenv
 import pandas as pd
 from typing import Optional, List
+from enum import Enum
+
+
+class ParameterType(Enum):
+    TEXT = "text"
+    NUMBER = "number"
+    DATE = "date"
+    ENUM = "enum"
+
+
+class QueryParameter:
+    def __init__(self, name: str, type: str, value: str):
+        self.name = name
+        self.type = type
+        self.value = value
+
+    def to_dict(self):
+        # Convert to dictionary format expected by Dune API
+        return {
+            "key": self.name,
+            "type": self.type,  # Assuming ParameterType is an Enum
+            "value": self.value,
+        }
 
 
 dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
@@ -19,17 +42,15 @@ found_files = [file for file in files if "___" not in file and file.endswith(".s
 # Ensure queries.yml path is correctly set relative to this script's location
 queries_yml_path = os.path.join(os.path.dirname(__file__), "..", "queries.yml")
 
-
-def find_parameters_in_sql(sql_text: str):
-    # Regex to find {{variable}} patterns, now including broader character set
-    pattern = re.compile(r"\{\{([^\{\}]+)\}\}")
-    matches = set(pattern.findall(sql_text))  # Use a set to ensure uniqueness
-    # Assuming Dune's API expects parameters to be dictionaries with specific keys
-    parameters = [
-        {"name": match.strip(), "type": "text", "value": ""} for match in matches
-    ]
-    return parameters
-
+queries_with_params = [
+    "cash-inflow.sql",
+    "endowment-assets.sql",
+    "endowment-pnl.sql",
+    "pnl.sql",
+    "reserves.sql",
+    "revenues.sql",
+    "test.sql",
+]
 
 for file in found_files:
     print("Adding:", file)
@@ -38,14 +59,24 @@ for file in found_files:
 
     with open(file_path, "r", encoding="utf-8") as file_content:
         text = file_content.read()
-
-        # Search for parameters in the SQL text
-        parameters = find_parameters_in_sql(text)
+        if file in queries_with_params:
+            parameters = [
+                QueryParameter(name="Time Period", value="month", type="text")
+            ]
+        else:
+            parameters = []
+        name = file_name_without_extension
+        query_sql = text
+        parameters = parameters
+        is_private = False
 
         # Create a new query with the correct file name and parameters
         try:
             res = dune.create_query(
-                name=file_name_without_extension, query_sql=text, params=parameters
+                name=name,
+                query_sql=query_sql,
+                params=parameters,
+                is_private=is_private,
             )
             query_id = res.base.query_id  # Extract the query_id from the result
 

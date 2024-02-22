@@ -1,0 +1,30 @@
+[sqlfluff]
+dialect = trino
+# You can adjust the verbosity level of the output for debugging
+verbose = 2
+# Exclude rules that are not applicable or cause issues with Trino syntax
+# This is a starter example, adjust based on your needs
+
+[sqlfluff:rules]
+# Example rules to exclude, you might need to add or remove based on your experience
+exclude_rules = L003,L010,L016,L031,L034
+
+[sqlfluff:rules:L003]
+# Indentation is not consistent within a file
+# Trino might format SQL differently, so you might want to disable this
+
+[sqlfluff:rules:L010]
+# Inconsistent capitalization of keywords
+# Depending on your preference, you might enforce or relax this rule
+
+[sqlfluff:rules:L016]
+# Line is too long
+# SQL statements can be quite long, especially with complex queries
+
+[sqlfluff:rules:L031]
+# Avoid aliases in join conditions
+# Adjust based on your use cases
+
+[sqlfluff:rules:L034]
+# Use wildcards then simple targets before calculations and aggregates in select statements
+# Trino queries might not always follow this order, adjust according to your style

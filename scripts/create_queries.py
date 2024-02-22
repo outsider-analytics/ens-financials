@@ -7,13 +7,6 @@ from typing import Optional, List
 from enum import Enum
 
 
-class ParameterType(Enum):
-    TEXT = "text"
-    NUMBER = "number"
-    DATE = "date"
-    ENUM = "enum"
-
-
 class QueryParameter:
     def __init__(self, name: str, type: str, value: str):
         self.name = name
@@ -59,7 +52,7 @@ for file in found_files:
 
     with open(file_path, "r", encoding="utf-8") as file_content:
         text = file_content.read()
-        if file in queries_with_params:
+        if any(query_param in file for query_param in queries_with_params):
             parameters = [
                 QueryParameter(name="Time Period", value="month", type="text")
             ]

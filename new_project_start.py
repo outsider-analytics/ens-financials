@@ -29,6 +29,8 @@ def main():
     change_script_path = os.path.join("scripts", "change_project_name.py")
     subprocess.run(["python", change_script_path, new_prefix], check=True)
 
+    quit()
+
     # After renaming files, run push_to_dune.py to push changes
     push_script_path = os.path.join("scripts", "push_to_dune.py")
     subprocess.run(["python", push_script_path], check=True)

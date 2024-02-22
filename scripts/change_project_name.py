@@ -14,9 +14,9 @@ def rename_files_in_queries(new_prefix, queries_path):
             if "-" in name:
                 # Keep the part after the first "-"
                 parts = name.split("-", 1)
-                new_file_name = new_prefix + "-" + parts[1] + ext
+                new_file_name = new_prefix + "-" + parts[1] + ext + ".sql"
             else:
-                new_file_name = new_prefix + "-" + name + ext
+                new_file_name = new_prefix + "-" + name + ext + ".sql"
 
             # Construct the full old and new file paths
             old_file_path = os.path.join(root, file)

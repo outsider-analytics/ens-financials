@@ -1,10 +1,11 @@
 import os
-import sys
+import re
 from dune_client.client import DuneClient
 from dotenv import load_dotenv
 import pandas as pd
+from typing import Optional, List
 
-# Adjust the dotenv path if necessary
+
 dotenv_path = os.path.join(os.path.dirname(__file__), "..", ".env")
 load_dotenv(dotenv_path)
 
@@ -18,6 +19,18 @@ found_files = [file for file in files if "___" not in file and file.endswith(".s
 # Ensure queries.yml path is correctly set relative to this script's location
 queries_yml_path = os.path.join(os.path.dirname(__file__), "..", "queries.yml")
 
+
+def find_parameters_in_sql(sql_text: str):
+    # Regex to find {{variable}} patterns
+    pattern = re.compile(r"\{\{(\w+)\}\}")
+    matches = pattern.findall(sql_text)
+    parameters = []
+    for match in matches:
+        # For simplicity, assuming all parameters are of type 'text' with no default value
+        parameters.append(match)
+    return parameters
+
+
 for file in found_files:
     print("Adding:", file)
     file_path = os.path.join(queries_path, file)
@@ -26,14 +39,15 @@ for file in found_files:
     with open(file_path, "r", encoding="utf-8") as file_content:
         text = file_content.read()
 
-        # Create a new query with the correct file name
-        try:
-            res = dune.create_query(name=file_name_without_extension, query_sql=text)
+        # Search for parameters in the SQL text
+        parameters = find_parameters_in_sql(text)
 
-            # Create a new query with the correct file name
-            res = dune.create_query(name=file_name_without_extension, query_sql=text)
-            # Extract the query_id from the result
-            query_id = res.base.query_id
+        # Create a new query with the correct file name and parameters
+        try:
+            res = dune.create_query(
+                name=file_name_without_extension, query_sql=text, params=parameters
+            )
+            query_id = res.base.query_id  # Extract the query_id from the result
 
             # Append the query_id to queries.yml
             with open(queries_yml_path, "a") as queries_file:

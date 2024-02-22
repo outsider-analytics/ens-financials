@@ -29,9 +29,11 @@ for file in found_files:
         # Create a new query with the correct file name
         try:
             res = dune.create_query(name=file_name_without_extension, query_sql=text)
-            query_id = res["data"][
-                "query_id"
-            ]  # Adjust based on actual response structure
+
+            # Create a new query with the correct file name
+            res = dune.create_query(name=file_name_without_extension, query_sql=text)
+            # Extract the query_id from the result
+            query_id = res.base.query_id
 
             # Append the query_id to queries.yml
             with open(queries_yml_path, "a") as queries_file:

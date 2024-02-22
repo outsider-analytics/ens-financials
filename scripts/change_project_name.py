@@ -33,7 +33,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     new_prefix = sys.argv[1]
-    queries_path = "../queries"  # Adjust relative path as necessary
+    queries_path = "queries/"  # Adjust relative path as necessary
 
     # Check if the queries directory exists
     if not os.path.exists(queries_path):

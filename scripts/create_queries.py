@@ -22,7 +22,7 @@ queries_yml_path = os.path.join(os.path.dirname(__file__), "..", "queries.yml")
 
 def find_parameters_in_sql(sql_text: str):
     # Regex to find {{variable}} patterns
-pattern = re.compile(r"\{\{([\w\s]+)\}\}")
+    pattern = re.compile(r"\{\{([\w\s]+)\}\}")
     matches = pattern.findall(sql_text)
     parameters = []
     for match in matches:

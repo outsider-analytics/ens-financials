@@ -25,13 +25,15 @@ def main():
     # Replace queries.yml content
     update_queries_yml()
 
-    # Assuming change_project_name.py is in the 'scripts' folder and callable
+    # Call change_project_name.py script with new prefix
     change_script_path = os.path.join("scripts", "change_project_name.py")
     subprocess.run(["python", change_script_path, new_prefix], check=True)
 
-    quit()
+    # Call create_queries.py script to create and update queries
+    create_queries_script_path = os.path.join("scripts", "create_queries.py")
+    subprocess.run(["python", create_queries_script_path], check=True)
 
-    # After renaming files, run push_to_dune.py to push changes
+    # Call push_to_dune.py script to push changes
     push_script_path = os.path.join("scripts", "push_to_dune.py")
     subprocess.run(["python", push_script_path], check=True)
 

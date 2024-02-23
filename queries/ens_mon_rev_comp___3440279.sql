@@ -66,6 +66,3 @@ select
     / 1e6 as last_year_same_month_revenue
 from
     items
-/ 1e6 as last_year_same_month_revenue
-from
-    items

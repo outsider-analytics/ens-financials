@@ -586,8 +586,3 @@ ORDER BY
   ts,
   transaction,
   line
-eth2_accounting
-ORDER BY
-  ts,
-  transaction,
-  line

@@ -48,6 +48,3 @@ select
     / 1e6 as last_year_same_month_cash_inflow
 from
     items
-6 as last_year_same_month_cash_inflow
-from
-    items

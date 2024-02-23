@@ -107,9 +107,4 @@ WITH plugs_prices AS
 SELECT
   *
 FROM
-  plugs_accountingaction IS NULL
-  )
-SELECT
-  *
-FROM
   plugs_accounting

@@ -279,9 +279,3 @@ pivot AS (
 SELECT *
 FROM pivot
 ORDER BY rk ASC
-P BY rk, item
-)
-
-SELECT *
-FROM pivot
-ORDER BY rk ASC

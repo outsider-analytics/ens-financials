@@ -175,6 +175,4 @@ WITH wallet_list AS
     FROM cum_sum
     WHERE COALESCE(cum_pie * delta_rate/1e27, 0) <> 0
 )
-SELECT * FROM dsr_accountinglta_rate/1e27, 0) <> 0
-)
 SELECT * FROM dsr_accounting

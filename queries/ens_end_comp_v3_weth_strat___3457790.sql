@@ -334,5 +334,3 @@ SELECT
 FROM
   comp_accounting
  JOIN competh_prices on date_trunc('day', comp_accounting.ts) = competh_prices.period AND comp_accounting.token_address = competh_prices.contract_address
- ing.token_address = competh_prices.contract_address
- 

@@ -431,10 +431,4 @@ WITH
 SELECT
   *
 FROM
-  steth_accountinge_accrual > 0
-
-  )
-SELECT
-  *
-FROM
   steth_accounting

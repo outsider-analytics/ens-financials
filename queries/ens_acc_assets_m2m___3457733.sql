@@ -1,8 +1,6 @@
 -- part of a query repo
 -- query name: ENS-Accounting-Assets-M2M
 -- query link: https://dune.com/queries/3457733
-
-
 WITH
   m2m_wallets AS (
     SELECT
@@ -364,11 +362,6 @@ SELECT
   *
 FROM
   m2m_accounting
-UNION ALL
-SELECT
-  *
-FROM
-  m2m_seth2_accounting
 UNION ALL
 SELECT
   *

@@ -24,5 +24,4 @@ select item, period, amount
 from items
 where period >= current_date - interval '3' year
     -- and period < date_trunc('month', current_date)
-order by rk ascd < date_trunc('month', current_date)
 order by rk asc

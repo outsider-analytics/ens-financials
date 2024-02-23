@@ -15,8 +15,3 @@ items as (
 )
 select *
 from items
-erval '365' day
-    group by 3
-)
-select *
-from items

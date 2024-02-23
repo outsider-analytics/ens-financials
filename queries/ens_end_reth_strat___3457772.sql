@@ -408,9 +408,4 @@ WITH
 SELECT
   *
 FROM
-  reth_accountingase_accrual > 0
-  )
-SELECT
-  *
-FROM
   reth_accounting

@@ -347,9 +347,4 @@ WITH
 SELECT
   *
 FROM
-  spweth_accountinge_accrual > 0
-  )
-SELECT
-  *
-FROM
   spweth_accounting

@@ -36,5 +36,3 @@ from balances
 left join accounts on balances.account = accounts.account
 GROUP BY coalesce(account_label, accounts.account), cast(date_trunc('{{Time Period}}', period) as timestamp)
 order by item asc
-e Period}}', period) as timestamp)
-order by item asc

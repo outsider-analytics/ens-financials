@@ -21,5 +21,4 @@ items as (
 )
 select *
 from items
-where period >= current_date - interval '365' dayems
 where period >= current_date - interval '365' day

@@ -404,9 +404,4 @@ WITH
 SELECT
   *
 FROM
-  ankreth_accounting_accrual > 0
-  )
-SELECT
-  *
-FROM
   ankreth_accounting

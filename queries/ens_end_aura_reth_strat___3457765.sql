@@ -526,5 +526,4 @@ FROM
   /* instant pnl */
   /* equity also increases by this amount in a similar destination */
   /* accrual - assets in aura and equty increase by this amount */
-  /* aura rewards taken care of in swaps query */ */
   /* aura rewards taken care of in swaps query */

@@ -348,9 +348,4 @@ WITH
 SELECT
   *
 FROM
-  aethweth_accountingaccrual > 0
-  )
-SELECT
-  *
-FROM
   aethweth_accounting

@@ -311,10 +311,3 @@ SELECT
   *
 FROM
   comp_accounting
- rual, 0) <> 0
-  )
-SELECT
-  *
-FROM
-  comp_accounting
- 

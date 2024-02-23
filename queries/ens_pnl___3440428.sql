@@ -44,6 +44,4 @@ from items
 where period >= current_date - interval '3' year
     -- and period < date_trunc('month', current_date)
 GROUP BY
-    perioddate_trunc('month', current_date)
-GROUP BY
     period

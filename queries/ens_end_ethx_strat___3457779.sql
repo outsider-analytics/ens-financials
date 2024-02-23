@@ -383,9 +383,4 @@ WITH
 SELECT
   *
 FROM
-  ethx_accountingase_accrual > 0
-  )
-SELECT
-  *
-FROM
   ethx_accounting

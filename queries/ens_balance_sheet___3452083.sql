@@ -6,7 +6,7 @@
 WITH entries AS (
     SELECT *
     FROM dune.outsider_analytics_team.result_ens_acc_main
-)
+),
 
 items AS (
     SELECT
@@ -266,10 +266,4 @@ pivot AS (
 
 SELECT *
 FROM pivot
-ORDER BY rk ASC;
- BY rk, item
-)
-
-SELECT *
-FROM pivot
-ORDER BY rk ASC;
+ORDER BY rk ASC

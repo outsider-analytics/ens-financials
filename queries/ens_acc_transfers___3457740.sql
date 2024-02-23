@@ -218,9 +218,4 @@ WITH
 SELECT
   *
 FROM
-  transfers_accountingh_price
-  )
-SELECT
-  *
-FROM
   transfers_accounting

@@ -418,10 +418,4 @@ revenues_short_name_claims_revenue AS (
 SELECT
   *
 FROM
-  revenues_accountinglags
-      
-  )
-SELECT
-  *
-FROM
   revenues_accounting

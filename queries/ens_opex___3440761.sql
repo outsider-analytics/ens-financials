@@ -64,8 +64,3 @@ from
     weighted_sums
 order by
     base_period;
-rn"
-from
-    weighted_sums
-order by
-    base_period;

@@ -53,6 +53,7 @@ for file in found_files:
     with open(file_path, "r", encoding="utf-8") as file_content:
         text = file_content.read()
         if any(query_param in file for query_param in queries_with_params):
+            # todo: add enum options and type enum see example: https://docs.dune.com/api-reference/queries/endpoint/read
             parameters = [
                 QueryParameter(name="Time Period", value="month", type="text")
             ]

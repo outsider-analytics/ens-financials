@@ -41,3 +41,19 @@ if __name__ == "__main__":
         sys.exit(1)
     else:
         rename_files_in_queries(new_prefix, queries_path)
+
+    report_path = "scripts/query_report.py"
+
+    # Read the content of the file
+    with open(report_path, "r") as file:
+        lines = file.readlines()
+
+    # Modify the line that contains the project_name assignment
+    for i, line in enumerate(lines):
+        if line.strip().startswith("project_name ="):
+            lines[i] = f'project_name = "{new_prefix}"\n'
+            break  # Stop the loop once the line is found and modified
+
+    # Write the modified content back to the file
+    with open(report_path, "w") as file:
+        file.writelines(lines)

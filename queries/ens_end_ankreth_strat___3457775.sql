@@ -2,7 +2,6 @@
 -- query name: ENS-EnDAOment-ankrETH-Strategy
 -- query link: https://dune.com/queries/3457775
 
-
 WITH
   ankreth_wallets AS (
     SELECT 0x4f2083f5fbede34c2714affb3105539775f7fe64 AS wallet,
@@ -404,4 +403,4 @@ WITH
 SELECT
   *
 FROM
-  ankreth_accounting
+  ankreth_accountingg

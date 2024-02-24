@@ -2,7 +2,6 @@
 -- query name: ENS-EnDAOment-Compound-WETH-V3-Strategy
 -- query link: https://dune.com/queries/3457790
 
-
 WITH comp_wallet_list AS (
     SELECT
       0x4f2083f5fbede34c2714affb3105539775f7fe64 AS wallet 
@@ -334,3 +333,4 @@ SELECT
 FROM
   comp_accounting
  JOIN competh_prices on date_trunc('day', comp_accounting.ts) = competh_prices.period AND comp_accounting.token_address = competh_prices.contract_address
+ 

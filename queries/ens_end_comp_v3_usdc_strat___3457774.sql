@@ -2,7 +2,6 @@
 -- query name: ENS-EnDAOment-COMP-V3-USDC-Strategy
 -- query link: https://dune.com/queries/3457774
 
-
 WITH comp_wallet_list AS (
     SELECT
       0x4f2083f5fbede34c2714affb3105539775f7fe64 AS wallet 
@@ -311,3 +310,4 @@ SELECT
   *
 FROM
   comp_accounting
+ 

@@ -2,7 +2,6 @@
 -- query name: ENS-Accounting-Expenses
 -- query link: https://dune.com/queries/3457730
 
-
 WITH
   expenses_wallets AS (
     SELECT
@@ -287,4 +286,4 @@ WITH
 SELECT
   *
 FROM
-  expenses_accounting
+  expenses_accountingg

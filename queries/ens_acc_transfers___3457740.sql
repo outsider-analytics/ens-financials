@@ -6,7 +6,7 @@ WITH
   transfers_wallets AS (
     SELECT
       0xfe89cc7abb2c4183683ab71653c4cdc9b02d44b7 AS wallet,
-          'ENS: DAO Wallet' AS name
+      'ENS: DAO Wallet' AS name
     UNION ALL
     SELECT
       0xcf60916b6cb4753f58533808fa610fcbd4098ec0 AS wallet,
@@ -218,4 +218,4 @@ WITH
 SELECT
   *
 FROM
-  transfers_accounting
+  transfers_accountingting

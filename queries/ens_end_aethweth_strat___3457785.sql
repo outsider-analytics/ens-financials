@@ -2,7 +2,6 @@
 -- query name: ENS-EnDAOment-aEthWETH-Strategy
 -- query link: https://dune.com/queries/3457785
 
-
 WITH
   aethweth_wallets AS (
     SELECT 0x4f2083f5fbede34c2714affb3105539775f7fe64 AS wallet,
@@ -348,4 +347,4 @@ WITH
 SELECT
   *
 FROM
-  aethweth_accounting
+  aethweth_accountingg

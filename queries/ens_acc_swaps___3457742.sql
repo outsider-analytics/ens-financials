@@ -2,7 +2,6 @@
 -- query name: ENS-Accounting-Swaps
 -- query link: https://dune.com/queries/3457742
 
-
 WITH swaps_wallets AS 
 (
     SELECT * FROM 
@@ -547,4 +546,4 @@ FROM
 WHERE
   CAST(ts AS DATE) < CURRENT_DATE
 ORDER BY
-  ts
+  tss

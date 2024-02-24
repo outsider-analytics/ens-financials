@@ -30,7 +30,7 @@ WITH entries AS (
     UNION ALL
     SELECT * FROM dune.outsider_analytics_team.result_ens_acc_swaps
     UNION ALL
-    SELECT * FROM dune.outsider_analytics_team.result_ens_end_comp_v3_weth_strat
+    SELECT * FROM dune.outsider_analytics_team.result_ens_end_comp_strat
     UNION ALL
     SELECT * FROM dune.outsider_analytics_team.result_ens_end_aura_wsteth_strat
     UNION ALL
@@ -61,3 +61,4 @@ WITH entries AS (
 
 SELECT * FROM entries
 ORDER BY ts, transaction, line
+n, line

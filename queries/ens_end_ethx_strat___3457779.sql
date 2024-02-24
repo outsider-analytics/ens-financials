@@ -2,7 +2,6 @@
 -- query name: ENS-EnDAOment-ETHx-Strategy
 -- query link: https://dune.com/queries/3457779
 
-
 WITH
   ethx_wallets AS (
     SELECT 0x4f2083f5fbede34c2714affb3105539775f7fe64 AS wallet,
@@ -383,4 +382,4 @@ WITH
 SELECT
   *
 FROM
-  ethx_accounting
+  ethx_accountingg

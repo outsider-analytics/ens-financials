@@ -7,15 +7,7 @@ with entries as (
     select cast(account as varchar) as account, amount, date_trunc('{{Time Period}}', ts) as period from dune.outsider_analytics_team.result_ens_acc_main
 ),
 items as (
-    select '329' as rk, 'Revenues' as item, period, sum(case when account like '321%' then amount end) as amount
-    from entries
-    group by period
-    union all
-    select '3211' as rk, 'Rev - Domain reg' as item, period, sum(case when account like '3211%' or account like '3213%' then amount end) as amount
-    from entries
-    group by period
-    union all
-    select '3212' as rk, 'Rev - Domain renew' as item, period, sum(case when account like '3212%' then amount end) as amount
+    select '321' as rk, 'Revenues' as item, period, sum(case when account like '321%' then amount end) as amount
     from entries
     group by period
     union all
@@ -37,9 +29,16 @@ items as (
 )
 SELECT 
     period, 
-    sum(CASE WHEN item = 'P&L (excl. FX)' OR item = 'Currencies effect' THEN amount END) as Profit,
-    sum(CASE WHEN item = 'P&L (excl. FX)' THEN amount END) as "Profit (excl. FX)",
-    -sum(CASE WHEN item = 'Op. Expenses' THEN amount END) as "Operating Expenses"
+    sum(CASE WHEN item = 'P&L (excl. FX)' OR item = 'Currencies effect' THEN amount END) as "Retained Earnings (including fx)",
+    sum(CASE WHEN item = 'P&L (excl. FX)' THEN amount END) as "Retained Earnings (excluding fx)",
+    sum(CASE WHEN item = 'Investments P&L' THEN amount END) as "Investment P&L",
+    sum(CASE WHEN item = 'Revenues' THEN amount END) as "Op Revenues",
+    -sum(CASE WHEN item = 'Op. Expenses' THEN -amount END) as "Op Expenses"
+from items
+where period >= current_date - interval '3' year
+    -- and period < date_trunc('month', current_date)
+GROUP BY
+    period Expenses' THEN amount END) as "Operating Expenses"
 from items
 where period >= current_date - interval '3' year
     -- and period < date_trunc('month', current_date)

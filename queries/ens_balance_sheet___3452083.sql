@@ -10,16 +10,17 @@ WITH entries AS (
 
 items AS (
     SELECT
-        1 AS rk,
-        '<b>Assets</b>' AS item,
+        0 AS rk,
+        '<b>Total Assets</b>' AS item,
         DATE_TRUNC('month', ts) AS month,
         SUM(CASE WHEN CAST(account AS varchar) LIKE '1%' THEN amount END)
             AS amount
     FROM entries
     GROUP BY DATE_TRUNC('month', ts)
+    -- Significant differences with stated balance sheet in reports need to sync up
     UNION ALL
     SELECT
-        2 AS rk,
+        1 AS rk,
         '&nbsp;&nbsp;&nbsp;&nbsp;<i>Cash</i>' AS item,
         DATE_TRUNC('month', ts) AS month,
         SUM(CASE WHEN CAST(account AS varchar) LIKE '111%' THEN amount END)
@@ -28,7 +29,7 @@ items AS (
     GROUP BY DATE_TRUNC('month', ts)
     UNION ALL
     SELECT
-        3 AS rk,
+        2 AS rk,
         '&nbsp;&nbsp;&nbsp;&nbsp;<i>Money Markets</i>' AS item,
         DATE_TRUNC('month', ts) AS month,
         SUM(CASE WHEN CAST(account AS varchar) LIKE '112%' THEN amount END)
@@ -37,7 +38,7 @@ items AS (
     GROUP BY DATE_TRUNC('month', ts)
     UNION ALL
     SELECT
-        4 AS rk,
+        3 AS rk,
         '&nbsp;&nbsp;Cash & cash equivalents' AS item,
         DATE_TRUNC('month', ts) AS month,
         SUM(CASE WHEN CAST(account AS varchar) LIKE '11%' THEN amount END)
@@ -46,8 +47,8 @@ items AS (
     GROUP BY DATE_TRUNC('month', ts)
     UNION ALL
     SELECT
-        5 AS rk,
-        '&nbsp;&nbsp;ETH' AS item,
+        4 AS rk,
+        '&nbsp;&nbsp;&nbsp;&nbsp;ETH' AS item,
         DATE_TRUNC('month', ts) AS month,
         SUM(CASE WHEN CAST(account AS varchar) LIKE '12%' THEN amount END)
             AS amount
@@ -55,8 +56,8 @@ items AS (
     GROUP BY DATE_TRUNC('month', ts)
     UNION ALL
     SELECT
-        6 AS rk,
-        '&nbsp;&nbsp;ETH Investments' AS item,
+        5 AS rk,
+        '&nbsp;&nbsp;&nbsp;&nbsp;ETH Investments' AS item,
         DATE_TRUNC('month', ts) AS month,
         SUM(CASE WHEN CAST(account AS varchar) LIKE '13%' THEN amount END)
             AS amount
@@ -64,8 +65,17 @@ items AS (
     GROUP BY DATE_TRUNC('month', ts)
     UNION ALL
     SELECT
+        6 AS rk,
+        '&nbsp;&nbsp;ETH Total' AS item,
+        DATE_TRUNC('month', ts) AS month,
+        SUM(CASE WHEN CAST(account AS varchar) LIKE '13%' OR CAST(account AS varchar) LIKE '12%' THEN amount END)
+            AS amount
+    FROM entries
+    GROUP BY DATE_TRUNC('month', ts)
+    UNION ALL
+    SELECT
         7 AS rk,
-        '<b>Liabilities</b>' AS item,
+        '<b>Total Liabilities</b>' AS item,
         DATE_TRUNC('month', ts) AS month,
         SUM(CASE WHEN CAST(account AS varchar) LIKE '2%' THEN amount END)
             AS amount
@@ -83,7 +93,7 @@ items AS (
     UNION ALL
     SELECT
         9 AS rk,
-        '<b>Capital buffer</b>' AS item,
+        '<b>Total Capital</b>' AS item,
         DATE_TRUNC('month', ts) AS month,
         SUM(CASE WHEN CAST(account AS varchar) LIKE '3%' THEN amount END)
             AS amount
@@ -149,108 +159,51 @@ pivot AS (
     SELECT
         rk,
         item,
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1' YEAR
-                    THEN balance
-            END
-        ) AS "12 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '11' MONTH
-                    THEN balance
-            END
-        ) AS "11 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '10' MONTH
-                    THEN balance
-            END
-        ) AS "10 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '9' MONTH
-                    THEN balance
-            END
-        ) AS "9 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '8' MONTH
-                    THEN balance
-            END
-        ) AS "8 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '7' MONTH
-                    THEN balance
-            END
-        ) AS "7 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '6' MONTH
-                    THEN balance
-            END
-        ) AS "6 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '5' MONTH
-                    THEN balance
-            END
-        ) AS "5 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '4' MONTH
-                    THEN balance
-            END
-        ) AS "4 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '3' MONTH
-                    THEN balance
-            END
-        ) AS "3 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '2' MONTH
-                    THEN balance
-            END
-        ) AS "2 Months Ago",
-        SUM(
-            CASE
-                WHEN
-                    month
-                    = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1' MONTH
-                    THEN balance
-            END
-        ) AS "1 Month Ago",
-        SUM(
-            CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) THEN balance END
-        ) AS mtd,
-        SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2019 THEN balance END)
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '12' MONTH THEN balance END)
+            AS "12 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '11' MONTH THEN balance END)
+            AS "11 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '10' MONTH THEN balance END)
+            AS "10 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '9' MONTH THEN balance END)
+            AS "9 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '8' MONTH THEN balance END)
+            AS "8 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '7' MONTH THEN balance END)
+            AS "7 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '6' MONTH THEN balance END)
+            AS "6 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '5' MONTH THEN balance END)
+            AS "5 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '4' MONTH THEN balance END)
+            AS "4 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '3' MONTH THEN balance END)
+            AS "3 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '2' MONTH THEN balance END)
+            AS "2 Months Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1' MONTH THEN balance END)
+            AS "1 Month Ago",
+        SUM(CASE WHEN month = DATE_TRUNC('month', CURRENT_DATE) THEN balance END) 
+            AS mtd,
+        SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2019 AND EXTRACT(MONTH from month) = 12 THEN balance END)
             AS "2019",
-        SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2020 THEN balance END)
+        SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2020 AND EXTRACT(MONTH from month) = 12 THEN balance END)
+            AS "2020",
+        SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2021 AND EXTRACT(MONTH from month) = 12 THEN balance END)
+            AS "2021",
+        SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2022 AND EXTRACT(MONTH from month) = 12 THEN balance END)
+            AS "2022",
+        SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2023 AND EXTRACT(MONTH from month) = 12 THEN balance END)
+            AS "2023",
+        SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2024 AND EXTRACT(MONTH from month) = EXTRACT(MONTH from CURRENT_DATE) THEN balance END)
+            AS "2024 YTD"
+    FROM balances
+    GROUP BY rk, item
+)
+
+SELECT *
+FROM pivot
+ORDER BY rk ASC= 2020 THEN balance END)
             AS "2020",
         SUM(CASE WHEN EXTRACT(YEAR FROM month) = 2021 THEN balance END)
             AS "2021",

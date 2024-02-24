@@ -2,7 +2,6 @@
 -- query name: ENS-EnDAOment-spWETH-Strategy
 -- query link: https://dune.com/queries/3457788
 
-
 WITH
   spweth_wallets AS (
     SELECT 0x4f2083f5fbede34c2714affb3105539775f7fe64 AS wallet,
@@ -347,4 +346,4 @@ WITH
 SELECT
   *
 FROM
-  spweth_accounting
+  spweth_accountingg

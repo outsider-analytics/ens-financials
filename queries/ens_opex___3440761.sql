@@ -20,6 +20,8 @@ monthly_entries as (
         entries
     where
         account like '322%'
+    OR
+        account like '312%' 
 ),
 
 periods as (

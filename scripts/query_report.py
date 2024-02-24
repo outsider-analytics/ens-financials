@@ -14,7 +14,7 @@ load_dotenv(dotenv_path)
 dune = DuneClient.from_env()
 
 # project name should change with the script
-project_name = "ens"
+project_name = "lido"
 
 # Define the path for the CSV file in the 'uploads' directory
 csv_file_path = os.path.join(

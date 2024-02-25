@@ -1,60 +1,58 @@
-# Dune Query Repo
+# Steakhouse Financial New Project Template
 
 A template for creating repos to [manage your Dune queries](https://dune.mintlify.app/api-reference/crud/endpoint/create) and any [CSVs as Dune tables](https://dune.mintlify.app/api-reference/upload/endpoint/upload).
 
-### Setup Your Repo
+### Onboarding A New Client: Steps
 
-1. Generate an API key from your Dune account and put that in both your `.env` file and [github action secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) (name it `DUNE_API_KEY`). You can create a key under your Dune team settings. *The api key must be from a plus plan for this repo to work.*
+1. **Fork the ENS Template on GitHub**
 
-2. Type your intended query ids into the `queries.yml` file. The id can be found from the link `https://dune.com/queries/<query_id>/...`. If you're creating this for a dashboard, go to the dashboard you want to create a repo and click on the "github" button in the top right of your dashboard to see the query ids.
+   - Begin by forking the ENS template on GitHub, then clone it to your preferred code editor, such as Visual Studio Code.
 
-3. Then, run `pull_from_dune.py` to bring in all queries into `/query_{id}.sql` files within the `/queries` folder. Directions to setup and run this python script are below.
+2. **Review SQL Files in the Queries Directory**
 
-### Updating Queries or CSV Tables
+   - Explore the `queries` directory.
+   - Remove any SQL files not relevant to the new project.
+   - Ignore file names prefixed with the project name (e.g., `ens-`).
 
-1. Make any changes you need to directly in the repo. Any time you push a commit to MAIN branch, `push_to_dune.py` will save your changes into Dune directly. You can run this manually too if you want.
+3. **Set Up a Python Virtual Environment**
 
-2. For CSVs, update the files in the `/uploads` folder. `upload_to_dune.py` will run on commit, or can be run manually. The table name in Dune will be `dune.team_name.dataset_<filename>`.
+   - Create a virtual environment: `python -m venv venv`.
+   - Activate the virtual environment: `source venv/bin/activate`.
 
----
+4. **Install Dependencies**
 
-### Query Management Scripts
+   - Ensure `pip` is installed in your virtual environment.
+   - Install required dependencies: `pip install -r requirements.txt`.
 
-You'll need python and pip installed to run the script commands. If you don't have a package manager set up, then use either [conda](https://www.anaconda.com/download) or [poetry](https://python-poetry.org/) . Then install the required packages:
+5. **Configure the `.env` File**
 
-```
-pip install -r requirements.txt
-```
+   - Create a new `.env` file: `touch .env`.
+   - Copy the contents from `.env.test` into the `.env` file.
+   - Add your Dune API key to the `.env` file.
 
-| Script | Action                                                                                                                                                    | Command |
-|---|-----------------------------------------------------------------------------------------------------------------------------------------------------------|---|
-| `pull_from_dune.py` | updates/adds queries to your repo based on ids in `queries.yml`                                                                                           | `python scripts/pull_from_dune.py` |
-| `push_to_dune.py` | updates queries to Dune based on files in your `/queries` folder                                                                                          | `python scripts/push_to_dune.py` |
-| `preview_query.py` | gives you the first 20 rows of results by running a query from your `/queries` folder. Specify the id. This uses Dune API credits | `python scripts/preview_query.py 2615782` |
-| `upload_to_dune.py` | uploads/updates any tables from your `/uploads` folder. Must be in CSV format, and under 200MB. | `python scripts/upload_to_dune.py` |
+6. **Delete any unneeded queries in the queries folder**
 
----
+   - Look at the end (for endaoment) and acc (for accounting) to delete
+   - Don't get rid off acc_main as this is the interchange that all queries go through
 
-### Things to be aware of
+7. **Start a New Project**
 
-💡: Names of queries are pulled into the file name the first time `pull_from_dune.py` is run. Changing the file name in app or in folder will not affect each other (they aren't synced). **Make sure you leave the `___id.sql` at the end of the file, otherwise the scripts will break!**
+   - Execute the script to initiate a new project: `python new_project_start.py`.
 
-🟧: Make sure to leave in the comment `-- already part of a query repo` at the top of your file. This will hopefully help prevent others from using it in more than one repo.
+8. **Name the New Project**
 
-🔒: Queries must be owned by the team the API key was created under - otherwise you won't be able to update them from the repo.
+   - Keep the project name under 5 characters (it will be cut off otherswise with big query names).
+   - Avoid dashes (`-`), underscores (`_`), or spaces to prevent formatting issues.
+   - Select a concise yet distinctive name to prefix all query file names.
 
-➕: If you want to add a query, add it in Dune app first then pull the query id (from URL `dune.com/queries/{id}/other_stuff`) into `queries.yml`
+9. **Finalize the Setup**
 
-🛑: If you accidently merge a PR or push a commit that messes up your query in Dune, you can roll back any changes using [query version history](https://dune.com/docs/app/query-editor/version-history).
+   - A success message indicates completion.
+   - Your queries will be integrated into Dune for further analysis and pipeline development.
 
----
+10. **Develop Your Data Pipeline**
 
-### For Contributors
+    - Utilize the provided files as a foundation for building and expanding your data pipeline in the uploads and downloads folders.
 
-I've set up four types of issues right now:
-- `bugs`: This is for data quality issues like miscalculations or broken queries.
-- `chart improvements`: This is for suggesting improvements to the visualizations.
-- `query improvements`: This is for suggesting improvements to the query itself, such as adding an extra column or table that enhances the results.
-- `generic questions`: This is a catch all for other questions or suggestions you may have about the dashboard.
-
-If you want to contribute, either start an issue or go directly into making a PR (using the same labels as above). Once the PR is merged, the queries will get updated in the frontend.
+11. **Query Report**
+    - Execute `python scripts/query_report.py` to generate a status report of all queries and upload them as a CSV to Dune.

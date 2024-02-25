@@ -1,5 +1,5 @@
 -- part of a query repo
--- query name: ens-end-comp-strat
+-- query name: ens_end_comp_strat
 -- query link: https://dune.com/queries/3457746
 
 

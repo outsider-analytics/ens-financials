@@ -124,7 +124,7 @@ items AS (
         13 AS rk,
         '&nbsp;Investment P&L' AS item,
         DATE_TRUNC('month', ts) AS month,
-        SUM(CASE WHEN CAST(account AS varchar) LIKE '32321%' THEN amount END)
+        SUM(CASE WHEN CAST(account AS varchar) LIKE '3232%' THEN amount END)
             AS amount
     FROM entries
     GROUP BY DATE_TRUNC('month', ts)
@@ -278,4 +278,4 @@ pivot AS (
 
 SELECT *
 FROM pivot
-ORDER BY rk ASC
+ORDER BY rk ASCC
